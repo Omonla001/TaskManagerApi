@@ -12,6 +12,16 @@ router.get('/test', auth, (req, res)=>{
     })
 });
 
+router.get('/userTask', auth, async (req, res) => {
+    try {
+      const tasks = await Task.find({ owner: req.user._id });
+      res.status(200).json({ tasks, message: 'Tasks fetched successfully' });
+    } catch (err) {
+      res.status(500).send({ error: err.message });
+    }
+  });
+  
+
 // Creating Task
 router.post('/createTask', auth, async(req, res)=>{
     try{
@@ -89,6 +99,8 @@ router.patch('/userTask/:id', auth, async (req, res)=>{
         res.status(409).send({error: err.message});
         console.log(err);
     }
+    // console.log('Task ID received:', req.params.id);
+
 })
 // Deleting Task
 router.delete('/userTask/:id', auth, async (req, res)=>{
@@ -108,6 +120,8 @@ router.delete('/userTask/:id', auth, async (req, res)=>{
         res.status(409).send({error: err.message});
         console.log(err);
     }
+    // console.log('Task ID received:', req.params.id);
+
 })
 
 

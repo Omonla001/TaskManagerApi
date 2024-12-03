@@ -17,7 +17,7 @@ userSchema.pre('save', async function (next) {
     // Hash password only if it's not already hashed
     if (user.isModified('password') && !user.password.startsWith('$2b$')) {
         user.password = await bcrypt.hash(user.password, 8);
-        console.log('First hashed password', user.password);
+        // console.log('First hashed password', user.password);
     }
     
     next();
